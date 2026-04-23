@@ -1,22 +1,17 @@
 export const getUsers = (req, res) => {
-  res.send("Get users route");
-};
+  const users = [
+    { id: 1, name: "Alex" },
+    { id: 2, name: "John" }
+  ];
 
-export const createUser = (req, res) => {
-  res.send("Post users route");
+  res.render("users/list", { users });
 };
 
 export const getUserById = (req, res) => {
-  const { userId } = req.params;
-  res.send(`Get user by Id route: ${userId}`);
-};
+  const user = {
+    id: req.params.userId,
+    name: "Alex"
+  };
 
-export const updateUser = (req, res) => {
-  const { userId } = req.params;
-  res.send(`Put user by Id route: ${userId}`);
-};
-
-export const deleteUser = (req, res) => {
-  const { userId } = req.params;
-  res.send(`Delete user by Id route: ${userId}`);
+  res.render("users/detail", { user });
 };

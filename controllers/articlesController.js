@@ -1,22 +1,30 @@
-export const getArticles = (req, res) => {
-  res.send("Get articles route");
+import ejs from "ejs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export const getArticles = async (req, res) => {
+  const articles = [
+    { id: 1, title: "Node.js Guide" },
+    { id: 2, title: "Express Tips" }
+  ];
+
+  const filePath = path.join(__dirname, "../views/articles/list.ejs");
+  const html = await ejs.renderFile(filePath, { articles });
+
+  res.send(html);
 };
 
-export const createArticle = (req, res) => {
-  res.send("Post articles route");
-};
+export const getArticleById = async (req, res) => {
+  const article = {
+    id: req.params.articleId,
+    title: "Node.js Guide"
+  };
 
-export const getArticleById = (req, res) => {
-  const { articleId } = req.params;
-  res.send(`Get article by Id route: ${articleId}`);
-};
+  const filePath = path.join(__dirname, "../views/articles/detail.ejs");
+  const html = await ejs.renderFile(filePath, { article });
 
-export const updateArticle = (req, res) => {
-  const { articleId } = req.params;
-  res.send(`Put article by Id route: ${articleId}`);
-};
-
-export const deleteArticle = (req, res) => {
-  const { articleId } = req.params;
-  res.send(`Delete article by Id route: ${articleId}`);
+  res.send(html);
 };
